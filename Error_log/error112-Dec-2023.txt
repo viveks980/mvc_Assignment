@@ -25,3 +25,4 @@ DD-12-2023 13-19-25The error is:System.FormatException: The specified string is 
    at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
    at System.Net.Mail.MailAddressCollection.Add(String addresses)
    at MvcAssignment.Dal.signUpClass.adduser(RegisterModel objmodel) in C:\Users\vivek\source\repos\MvcAssignment\Dal\signUpClass.cs:line 88
+iuytgyiutgiuytgiuytgiu
