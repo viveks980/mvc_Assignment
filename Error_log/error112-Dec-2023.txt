@@ -1,0 +1,27 @@
+DD-12-2023 13-15-43The error is:System.Data.SqlClient.SqlException (0x80131904): The parameterized query '(@userid nvarchar(4000))SELECT COUNT(*) FROM SignUpTable WHERE u' expects the parameter '@userid', which was not supplied.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlDataReader.TryConsumeMetaData()
+   at System.Data.SqlClient.SqlDataReader.get_MetaData()
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite, String method)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method)
+   at System.Data.SqlClient.SqlCommand.ExecuteScalar()
+   at MvcAssignment.Dal.signUpClass.adduser(RegisterModel objmodel) in C:\Users\vivek\source\repos\MvcAssignment\Dal\signUpClass.cs:line 50
+ClientConnectionId:d757f833-ffae-48c5-94ee-c8c1282413b2
+Error Number:8178,State:1,Class:16
+DD-12-2023 13-16-58The error is:System.ArgumentNullException: String reference not set to an instance of a String. (Parameter 's')
+   at System.Text.Encoding.GetBytes(String s)
+   at MvcAssignment.Dal.signUpClass.EncryptPassword(String password) in C:\Users\vivek\source\repos\MvcAssignment\Dal\signUpClass.cs:line 142
+   at MvcAssignment.Dal.signUpClass.adduser(RegisterModel objmodel) in C:\Users\vivek\source\repos\MvcAssignment\Dal\signUpClass.cs:line 77
+DD-12-2023 13-19-25The error is:System.FormatException: The specified string is not in the form required for an e-mail address.
+   at System.Net.Mail.MailAddressParser.ReadCfwsAndThrowIfIncomplete(String data, Int32 index)
+   at System.Net.Mail.MailAddressParser.ParseDomain(String data, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseAddress(String data, Boolean expectMultipleAddresses, Int32& index)
+   at System.Net.Mail.MailAddressParser.ParseMultipleAddresses(String data)
+   at System.Net.Mail.MailAddressCollection.ParseValue(String addresses)
+   at System.Net.Mail.MailAddressCollection.Add(String addresses)
+   at MvcAssignment.Dal.signUpClass.adduser(RegisterModel objmodel) in C:\Users\vivek\source\repos\MvcAssignment\Dal\signUpClass.cs:line 88

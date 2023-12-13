@@ -1,0 +1,202 @@
+﻿@model MvcAssignment.Models.ProductModel
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body style="background-color:antiquewhite">
+    <div style="padding:3%" class="container mt-5 w-50">
+        <form id="roleForm" style="border-radius:15px;padding:5%;background:white;">
+            <div class="d-none"><input type="text" value="@Model.ProductId" class="form-control" id="ProductId" name="ProductId" required></div>
+            <h2 class="mb-4">Order Product Here</h2>
+            <div class="form-group">
+                <label for="roleName">Product Name:</label>
+                <input type="text" value="@Model.ProductName" class="form-control" id="productName" name="productName" readonly required>
+            </div>
+            <div class="mb-3">
+                <label for="UserName" class="form-label">
+                    User Name
+               </label>
+                @Html.DropDownList("user", ViewBag.UserName as SelectList, "select", new { @class = "form-control", id = "name" })
+            </div>
+            <div class="d-none">                   
+                    @Html.DropDownList("email", ViewBag.roleDes3 as SelectList, "select", new { @class = "form-control", id = "userId" })
+                </div>
+        <div class="mb-3">
+            <label for="country">Country:</label>
+            @Html.DropDownList("Country", ViewBag.roleDes as SelectList, "select", new { @class = "form-control ", id = "CountryId", onchange = "get_tbl(this.value)" })
+        
+        </div>
+        <div class="mb-3">
+            <label for="country">State:</label>
+            @*@Html.DropDownList("State", ViewBag.roleDes1 as SelectList, "select", new { @class = "form-control", id = "StateId", onchange = "get_City(this.value)" })*@
+            <select id="category" class="form-select" onchange="get_City(this.value)">
+                <option value="">Select</option>
+
+                @foreach (var item in ViewBag.roleDes1)
+                {
+        <option value="@item.Value"> @item.Text</option>}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="country">City:</label>  
+            @*@Html.DropDownList("City", ViewBag.roleDes2 as SelectList, "select", new { @class = "form-control", id = "CityId" })*@
+            <select id="city" class="form-select">
+                <option value="">Select</option>
+
+                @foreach (var item in ViewBag.roleDes2)
+                {
+        <option value="@item.Value"> @item.Text</option>}
+            </select>
+        </div>
+            <div class="form-group">
+                <label for="roleDesignation">Product Price:</label>
+                <input type="text" class="form-control" id="ProductPrice" value="@Model.ProductPrice" name="ProductPrice" readonly required>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="OrderStatus">
+                <label class="form-check-label" for="OrderStatus">
+                    Order Status
+                </label>
+            </div>
+            <br />
+            <button id="confirmOrder" type="submit" style="background-color: #0c4da2" class="btn btn-primary">Order Product</button>
+            <button id="cancel" class="btn btn-secondary">Cancel</button>
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $('#confirmOrder').click(function (e) {
+            e.preventDefault(); // Prevent the default form submission
+            //let ProductId = $('#ProductId').val();
+            let productName = $('#ProductId').val();
+            debugger;
+            let id = $('#userId').val();
+            let name = $('#name').val();
+            let address = $('#city').val();
+            let OrderStatus = $('#OrderStatus').is(':checked');
+            let obj = {
+                /*created_date: created_date,*/
+                /*ProductId: ProductId,*/
+                productName: productName,
+                name: name,
+                address: address,
+                OrderStatus: OrderStatus,
+                id: id,
+            };
+            $.ajax({
+                url: "/User/saveOrder",
+                type: "POST",
+                data: obj,
+                success: function (data) {
+                    alert("Order Confirmed..!!");
+                    location.reload();
+                    window.location.href = "GetOrderList"
+                },
+                error: function (err) {
+                    console.error(err.message);
+                    return;
+                },
+            });
+        });
+    });
+
+</script>
+<script>
+
+    function get_tbl(id) {
+
+        console.log(id)
+
+        //debugger;
+
+        $.ajax({
+
+            url: "/User/statefilter?id=" + id,
+
+            type: "POST",
+
+            success: function (data) {
+
+                console.log("data ", data);
+
+                var categ = $("#category").html("");
+
+                categ.append('<option value=""> Select </option>')
+
+                if (data != null && data != undefined) {
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        categ.append("<option value='" + data[i].stateId + "'>" + data[i].stateName + "</option>");
+
+                    }
+
+                }
+
+            },
+
+            error: function (err) {
+
+                console.error(err.message);
+
+                return;
+
+            },
+
+        });
+
+    }
+
+</script>
+<script>
+
+    function get_City(id) {
+        get_City
+        console.log(id)
+        debugger;
+        $.ajax({
+
+            url: "/User/cityfilter?id=" + id,
+
+            type: "POST",
+
+            success: function (data) {
+
+                console.log("data ", data);
+
+                var categ = $("#city").html("");
+
+                categ.append('<option value=""> Select </option>')
+
+                if (data != null && data != undefined) {
+
+                    for (var i = 0; i < data.length; i++) {
+
+                        categ.append("<option value='" + data[i].cityId + "'>" + data[i].cityName + "</option>");
+
+                    }
+
+                }
+
+            },
+
+            error: function (err) {
+
+                console.error(err.message);
+
+                return;
+
+            },
+
+        });
+
+    }
+
+</script>
